@@ -1,0 +1,2 @@
+# mayapy_package_utilities
+Mayaで使用するpythonパッケージでサブモジュールとして使用するためのユーティリティ
