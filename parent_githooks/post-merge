@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+utildir=$(dirname $(cd $(dirname $0); pwd))/../../../util
+export PATH=$PATH:$utildir
+cd $utildir
+echo | copy_setup_py.bat

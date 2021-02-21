@@ -1,11 +1,18 @@
 @echo off
 
+@REM カレントディレクトリを呼び出し元に設定（管理者権限で実行した際のへの対応）
+cd /d %~dp0
+
 @REM 遅延環境変数有効
 setlocal EnableDelayedExpansion
 
-@REM パッケージ名を取得
-set DIR_PATH=%~dp0\..\
+@REM 親ディレクトリ名を取得
+set DIR_PATH=%cd%\
 for %%1 in ("%DIR_PATH:~0,-1%") do set DIR_NAME=%%~nx1
+
+@REM パッケージ名を取得
+set DIR_PATH=%cd%\..\
+for %%1 in ("%DIR_PATH:~0,-1%") do set PACKAGE_NAME=%%~nx1
 
 @REM pythonが使うエンコードを指定
 set PYTHONIOENCODING=utf-8
@@ -19,6 +26,11 @@ if "%LIB_PATH%"=="" (
     set LIB_PATH=..\Lib\site-packages
     set UPGRADE=--upgrade
 )
+
+@REM ------- githookをを登録 -------------------------
+echo %cd%\..\.git\modules\%DIR_NAME%\hooks\post-merge
+echo %cd%\parent_githooks\post-merge
+mklink %cd%\..\.git\modules\%DIR_NAME%\hooks\post-merge %cd%\parent_githooks\post-merge
 
 @REM ------- レジストリからMayaインストールフォルダ検索 -------------------------
 set MAYA_APP_PATH=null
@@ -51,7 +63,7 @@ if not %errorlevel%==0 (
 call %MAYAPY_PATH% -m pip install %UPGRADE% -r ..\requirements.txt -t %LIB_PATH% --use-feature=2020-resolver
 
 echo ==============================================================================
-echo  Complete setup of %DIR_NAME%.
+echo  Complete setup of %PACKAGE_NAME%.
 echo ==============================================================================
 goto end
 
