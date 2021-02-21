@@ -1,0 +1,1 @@
+copy setup.py ..\setup.py
