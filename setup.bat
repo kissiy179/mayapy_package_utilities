@@ -28,9 +28,7 @@ if "%LIB_PATH%"=="" (
 )
 
 @REM ------- githookをを登録 -------------------------
-echo %cd%\..\.git\modules\%DIR_NAME%\hooks\post-merge
-echo %cd%\parent_githooks\post-merge
-mklink %cd%\..\.git\modules\%DIR_NAME%\hooks\post-merge %cd%\parent_githooks\post-merge
+echo | call link_githooks
 
 @REM ------- レジストリからMayaインストールフォルダ検索 -------------------------
 set MAYA_APP_PATH=null
