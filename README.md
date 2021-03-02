@@ -1,5 +1,6 @@
 # mayapy_package_utilities
-Mayaで使用するpythonパッケージでサブモジュールとして使用するためのユーティリティ
+Mayaで使用するpythonパッケージでサブモジュールとして使用するためのユーティリティ  
+親パッケージは[maya_package_base](https://github.com/kissiy179/mayapy_package_base)を元にする前提
 
 | ファイル名 | 概要 |
 | ---- | ---- |
