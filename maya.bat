@@ -24,7 +24,7 @@ if not !MAYA_APP_PATH!==null (
 )
 
 @REM レジストリから全Mayaインストールフォルダを検索して見つかったら実行処理へ移動
-for /l %%v in (2030, -1, 2015) do (
+for /l %%v in (2020, -1, 2015) do (
     FOR /F "TOKENS=1,2,*" %%I IN ('REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Autodesk\Maya\%%v\Setup\InstallPath" /v "MAYA_INSTALL_LOCATION"') DO IF "%%I"=="MAYA_INSTALL_LOCATION" SET MAYA_APP_PATH=%%K
 
     if not !MAYA_APP_PATH!==null goto execute
