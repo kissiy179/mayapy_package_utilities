@@ -14,7 +14,7 @@ Mayaは予めインストールされている必要アリ
 | ファイル名 | 概要 |
 | ---- | ---- |
 | setup.py | 親リポジトリの依存パッケージを解決するためのPythonスクリプト<br>setup.batから呼び出してこのパッケージ用の環境を設定するほか、親リポジトリをpip install可能なパッケージにするために親階層にコピーして使用する |
-| setup.bat | インストールされているMayaを検索し、mayapyを使用してpip installで依存パッケージをインストールする<br>またsetup.pyの親階層へのコピーも行う |
+| setup.bat | 親パッケージに依存パッケージをインストールする<br>またsetup.pyを親パッケージにコピーするなど共通ユーティリティを最新に保つ役目を持つ |
 | copy_setup_py.bat | setup.pyを親パッケージにコピーする<br>setup.bat、post-mergeフックから呼ばれる |
 | link_githooks.bat | parent_githooks内のgithookテンプレートを親リポジトリにシンボリックリンク接続する<br>setup.bat、post-mergeフックから呼ばれる |
 | maya.bat | インストールされているMayaを検索しこのパッケージへのパスを通して起動する<br>UI言語、Mayaバージョンを指定できる |
