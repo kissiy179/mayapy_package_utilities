@@ -11,8 +11,11 @@ cd /d %~dp0\..\
 Set MAYA_MODULE_PATH=%cd%;%MAYA_MODULE_PATH%
 
 @REM ------- Mayaインストールフォルダを検索 -------------------------
-set MAYA_APP_PATH=null
+Set MAYA_APP_PATH=null
 Set MAYA_VER=%1
+Set MAYA_MAX_VER=2020
+Set MAYA_MIN_VER=2015
+
 
 @REM 指定されたバージョンがレジストリから見つかったら実行処理へ移動
 FOR /F "TOKENS=1,2,*" %%I IN ('REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Autodesk\Maya\%MAYA_VER%\Setup\InstallPath" /v "MAYA_INSTALL_LOCATION"') DO IF "%%I"=="MAYA_INSTALL_LOCATION" SET MAYA_APP_PATH=%%K
@@ -24,7 +27,7 @@ if not !MAYA_APP_PATH!==null (
 )
 
 @REM レジストリから全Mayaインストールフォルダを検索して見つかったら実行処理へ移動
-for /l %%v in (2020, -1, 2015) do (
+for /l %%v in (%MAYA_MAX_VER%, -1, %MAYA_MIN_VER%) do (
     FOR /F "TOKENS=1,2,*" %%I IN ('REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Autodesk\Maya\%%v\Setup\InstallPath" /v "MAYA_INSTALL_LOCATION"') DO IF "%%I"=="MAYA_INSTALL_LOCATION" SET MAYA_APP_PATH=%%K
 
     if not !MAYA_APP_PATH!==null goto execute
