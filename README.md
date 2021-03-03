@@ -8,5 +8,5 @@ Mayaで使用するpythonパッケージでサブモジュールとして使用�
 | setup.bat | インストールされているMayaを検索し、mayapyを使用してpip installで依存パッケージをインストールする<br>またsetup.pyの親階層へのコピーも行う |
 | copy_setup_py.bat | setup.pyを親パッケージにコピーする<br>setup.bat、post-mergeフックから呼ばれる |
 | link_githooks.bat | parent_githooks内のgithookテンプレートを親リポジトリにシンボリックリンク接続する<br>setup.bat、post-mergeフックから呼ばれる |
-| maya.bat | インストールされているMayaを検索しこのパッケージへのパスを通して起動する<br>Mayaバージョン、UI言語を指定できる |
+| maya.bat | インストールされているMayaを検索しこのパッケージへのパスを通して起動する<br>UI言語、Mayaバージョンを指定できる |
 | maya_en/jp.bat | インストールされているMayaを検索しこのパッケージへのパスを通して起動する<br>en=英語/jp=日本語UI指定 |
