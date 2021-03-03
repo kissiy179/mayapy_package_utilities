@@ -1,1 +1,1 @@
-call maya.bat 2020 en
+call maya.bat en

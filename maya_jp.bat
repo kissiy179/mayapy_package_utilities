@@ -1,1 +1,1 @@
-call maya.bat 2020 jp
+call maya.bat jp
