@@ -8,7 +8,7 @@ Mayaは予めインストールされている必要アリ
     1. 親パッケージの依存パッケージがインストールされる
     1. setup.pyが親パッケージにコピーされる
     1. このユーティリティを更新する度にsetup.pyを親パッケージにコピーするgithookが登録される
-1. maya.bat/maya_en.bat/maya_jp.batもしくはmaya.batに言語(en or jp)/バージョンを指定したmata.batのショートカットを実行することで親パッケージの環境設定を適用したMayaが起動する
+1. **maya.bat / maya_en.bat / maya_jp.bat**もしくは**maya.bat**に言語(en or jp)/バージョン(2020 etc.)を指定したmata.batのショートカットを実行することで親パッケージの環境設定を適用したMayaが起動する
 
 ## ファイル
 | ファイル名 | 概要 |
@@ -18,4 +18,4 @@ Mayaは予めインストールされている必要アリ
 | copy_setup_py.bat | setup.pyを親パッケージにコピーする<br>setup.bat、post-mergeフックから呼ばれる |
 | link_githooks.bat | parent_githooks内のgithookテンプレートを親リポジトリにシンボリックリンク接続する<br>setup.bat、post-mergeフックから呼ばれる |
 | maya.bat | インストールされているMayaを検索しこのパッケージへのパスを通して起動する<br>UI言語、Mayaバージョンを指定できる |
-| maya_en/jp.bat | インストールされているMayaを検索しこのパッケージへのパスを通して起動する<br>en=英語/jp=日本語UI指定 |
+| maya_en/jp.bat | 言語指定してmaya.batを実行する<br>en=英語/jp=日本語UI指定 |
