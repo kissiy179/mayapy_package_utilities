@@ -27,6 +27,9 @@ if "%LIB_PATH%"=="" (
     set UPGRADE=--upgrade
 )
 
+@REM ------- setup.pyを親パッケージにコピー
+echo | call copy_setup_py
+
 @REM ------- githookをを登録 -------------------------
 echo | call link_githooks
 
