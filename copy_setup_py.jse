@@ -1,0 +1,86 @@
+// オブジェクト生成
+var shell = new ActiveXObject('WScript.Shell');
+var fs = new ActiveXObject('Scripting.FileSystemObject');
+var dom = new ActiveXObject('MSXML2.DOMDocument');
+var currentFilePath = WScript.ScriptFullName;
+var currentFile = fs.getFile(currentFilePath);
+var args = WScript.Arguments;
+
+function msg(s){
+    shell.Popup(s, 0, "Debug", 0+0+0);
+}
+
+// フォルダ名、ファイル名を羅列してパスを生成
+// 「..」で親フォルダに移動
+function buildPath(){
+    var path = '';
+
+    for(var i=0; i<arguments.length; i++){
+        var name = arguments[i];
+
+        if(name === '..'){
+            if(fs.folderExists(path) === true){
+                var dir = fs.getFolder(path);
+                path = dir.parentFolder.path;
+
+            }else if(fs.fileExists(path) === true){
+                var dir = fs.getFile(path);
+                path = dir.parentFolder.path;
+            }
+            
+        }else{
+            path = fs.buildPath(path, name);
+        }
+    }
+
+    return path;
+}
+
+// 親パッケージのパッケージ名を取得
+function getParentPackageName(){
+    var gitConfigPath = buildPath(currentFilePath, '..', '..', '.git', 'config');
+    var fileObj = fs.openTextFile(gitConfigPath, 1)
+
+    var remoteFlg = false;
+    var packageName = 'pkg';
+
+    while(fileObj.AtEndOfLine === false)
+    {
+        var str = fileObj.readLine();
+        
+        if(str.indexOf('[remote') !== -1){
+            remoteFlg = true;
+        }
+
+        if(remoteFlg && str.indexOf('url') !== -1){
+            packageName = str.split('/').pop();
+            packageName = packageName.split('.')[0];
+            break;
+        }
+    }
+
+    fileObj.close()
+
+    return packageName;
+}
+
+// テンプレートに親パッケージ名を適用した文字列を取得
+function getSetupPyContents(){
+    var templatePath = buildPath(currentFilePath, '..', 'setup_template.py');
+    var fileObj = fs.openTextFile(templatePath, 1)
+    var contents = fileObj.readAll()
+    var packageName = getParentPackageName();
+    contents = contents.replace('{__PACKAGE_NAME__}', packageName);
+    fileObj.close()
+    return contents;
+}
+
+// 親パッケージのsetup.pyを書き換える
+function saveSetupPy(){
+    var dstPath = buildPath(currentFilePath, '..', '..', 'setup.py');
+    var contents = getSetupPyContents();
+    var fileObj = fs.openTextFile(dstPath, 2, true);
+    fileObj.write(contents);
+}
+
+saveSetupPy();

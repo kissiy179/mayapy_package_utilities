@@ -28,7 +28,7 @@ if "%LIB_PATH%"=="" (
 )
 
 @REM ------- setup.pyを親パッケージにコピー
-echo | call copy_setup_py
+echo | call copy_setup_py.jse
 
 @REM ------- githookをを登録 -------------------------
 echo | call link_githooks
@@ -36,7 +36,7 @@ echo | call link_githooks
 @REM ------- レジストリからMayaインストールフォルダ検索 -------------------------
 set MAYA_APP_PATH=null
 
-for /l %%v in (2030, -1, 2015) do (
+for /l %%v in (2020, -1, 2015) do (
     FOR /F "TOKENS=1,2,*" %%I IN ('REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Autodesk\Maya\%%v\Setup\InstallPath" /v "MAYA_INSTALL_LOCATION"') DO IF "%%I"=="MAYA_INSTALL_LOCATION" SET MAYA_APP_PATH=%%K
 
     if not !MAYA_APP_PATH!==null goto install_pip
