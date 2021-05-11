@@ -55,7 +55,7 @@ call %MAYAPY_PATH% -m pip -V
 
 @REM インストールされてなければインストール、されていればアップデート
 if not %errorlevel%==0 (
-    curl https://bootstrap.pypa.io/2.7/get-pip.py | %MAYAPY_PATH%
+    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py | %MAYAPY_PATH%
 ) else (
     call %MAYAPY_PATH% -m pip install --upgrade pip
 )
