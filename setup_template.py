@@ -7,7 +7,7 @@ from os.path import exists
 from setuptools import setup
 from setuptools import find_packages
 
-# List of excluded packages.
+# List of packages to ignore.
 # Pre-installed in Maya, etc.
 IGNORE_PACKAGES = ['PySide', 'PySide2']
 
