@@ -16,7 +16,7 @@ Set MAYA_VER=%2
 
 @REM ------- Find the Maya installation folder -------------------------
 Set MAYA_APP_PATH=null
-Set MAYA_MAX_VER=2020
+Set MAYA_MAX_VER=2022
 Set MAYA_MIN_VER=2015
 
 @REM If MAYA_VER is specified, set the search limit to the specified version.
