@@ -13,6 +13,11 @@ Set MAYA_MODULE_PATH=%cd%;%MAYA_MODULE_PATH%
 @REM Get the arguments.
 Set LANGUAGE=%1
 Set MAYA_VER=%2
+Set PYTHON_VER=%3
+
+if "!PYTHON_VER!"=="" (
+    Set PYTHON_VER=2
+)
 
 @REM ------- Find the Maya installation folder -------------------------
 Set MAYA_APP_PATH=null
@@ -36,6 +41,9 @@ goto except
 :execute
 @REM Language setting(en_US or ja_JP)
 Set MAYA_UI_LANGUAGE=%LANGUAGE%
+
+@REM Python version setting
+Set MAYA_PYTHON_VERSION=%PYTHON_VER%
 
 @REM Execute Maya
 start "" "%MAYA_APP_PATH%\bin\maya.exe"
