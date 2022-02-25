@@ -4,6 +4,7 @@ Mayaは予めインストールされている必要アリ
 
 ## 使い方
 1. [maya_package_base](https://github.com/kissiy179/mayapy_package_base)を元にしたパッケージからサブモジュール**util**として登録する
+1. 上記親パッケージのrequirements.txtにpip installしたいパッケージを記述する
 1. ダウンロードされたら**setup.bat**を実行する
 1. **maya.bat / maya_en.bat / maya_jp.bat**もしくは**maya.bat**に言語(en or jp)/バージョン(2020 etc.)を指定したmata.batのショートカットを実行することで親パッケージの環境設定を適用したMayaが起動する
 
