@@ -1,39 +1,39 @@
 @echo off
 
-@REM カレントディレクトリを呼び出し元に設定（管理者権限で実行した際のへの対応）
+@REM Set the current directory as the caller (for when executed with administrator privileges).
 cd /d %~dp0
 
-@REM 遅延環境変数有効
+REM Enable lazy environment variable setting.
 setlocal EnableDelayedExpansion
 
-@REM 親ディレクトリ名を取得
+@REM Get parent directory name.
 set DIR_PATH=%cd%\
 for %%1 in ("%DIR_PATH:~0,-1%") do set DIR_NAME=%%~nx1
 
-@REM パッケージ名を取得
+@REM Get package name.
 set DIR_PATH=%cd%\..\
 for %%1 in ("%DIR_PATH:~0,-1%") do set PACKAGE_NAME=%%~nx1
 
-@REM pythonが使うエンコードを指定
+@REM Specify the encoding used by python.
 set PYTHONIOENCODING=utf-8
 
-@REM ライブラリインストールパスを取得
+@REM Get library installation path.
 set LIB_PATH=%1
 set UPGRADE=
 
-@REM インストールパスが取得できない場合デフォルトパスにする & アップグレードオプションON
+@REM Use default path if installation path cannot be obtained and enable upgrade option.
 if "%LIB_PATH%"=="" (
     set LIB_PATH=..\Lib\site-packages
     set UPGRADE=--upgrade
 )
 
-@REM ------- setup.pyを親パッケージにコピー
+@REM ------- Copy setup.py to parent package.
 echo | call copy_setup_py.jse
 
-@REM ------- githookをを登録 -------------------------
+@REM ------- Register githooks -------------------------
 echo | call link_githooks
 
-@REM ------- レジストリからMayaインストールフォルダ検索 -------------------------
+@REM ------- Search Maya installation folder from registry -------------------------
 set MAYA_APP_PATH=null
 
 for /l %%v in (2020, -1, 2015) do (
@@ -42,25 +42,25 @@ for /l %%v in (2020, -1, 2015) do (
     if not !MAYA_APP_PATH!==null goto install_pip
 )
 
-@REM Mayaが見つからなければ例外処理に移動
+@REM If Maya is not found, move to exception handling.
 goto except
 
-@REM ------- pipインストール -------------------------
+@REM ------- Installing pip -------------------------
 :install_pip
-@REM mayapyのパスを取得
+@REM Get mayapy path.
 set MAYAPY_PATH="%MAYA_APP_PATH%bin\mayapy.exe"
 
-@REM pipがインストールされているか確認
+@REM Make sure pip is installed.
 call %MAYAPY_PATH% -m pip -V
 
-@REM インストールされてなければインストール、されていればアップデート
+@REM Install if not installed, otherwise update it.
 if not %errorlevel%==0 (
     curl https://bootstrap.pypa.io/pip/2.7/get-pip.py | %MAYAPY_PATH%
 ) else (
     call %MAYAPY_PATH% -m pip install --upgrade pip
 )
 
-@REM ------- パッケージインストール -------------------------
+@REM ------- Install packages -------------------------
 call %MAYAPY_PATH% -m pip install %UPGRADE% -r ..\requirements.txt -t %LIB_PATH% --use-feature=2020-resolver
 
 echo ==============================================================================
@@ -68,7 +68,7 @@ echo  Complete setup of %PACKAGE_NAME%.
 echo ==============================================================================
 goto end
 
-@REM Mayaインストールされてない場合の例外処理
+@REM Exception handling when Maya is not installed.
 :except
 echo Maya is not installed.
 
