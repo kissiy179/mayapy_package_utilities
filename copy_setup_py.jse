@@ -1,4 +1,4 @@
-// オブジェクト生成
+// Create objects.
 var shell = new ActiveXObject('WScript.Shell');
 var fs = new ActiveXObject('Scripting.FileSystemObject');
 var dom = new ActiveXObject('MSXML2.DOMDocument');
@@ -10,8 +10,8 @@ function msg(s){
     shell.Popup(s, 0, "Debug", 0+0+0);
 }
 
-// フォルダ名、ファイル名を羅列してパスを生成
-// 「..」で親フォルダに移動
+// Generate paths by listing folder and file names.
+// Use ".." to the parent folder.
 function buildPath(){
     var path = '';
 
@@ -36,7 +36,7 @@ function buildPath(){
     return path;
 }
 
-// 親パッケージのパッケージ名を取得
+// Get the package name of the parent package.
 function getParentPackageName(){
     var gitConfigPath = buildPath(currentFilePath, '..', '..', '.git', 'config');
     var fileObj = fs.openTextFile(gitConfigPath, 1)
@@ -64,7 +64,7 @@ function getParentPackageName(){
     return packageName;
 }
 
-// テンプレートに親パッケージ名を適用した文字列を取得
+// Get a string with the parent package name applied to the template.
 function getSetupPyContents(){
     var templatePath = buildPath(currentFilePath, '..', 'setup_template.py');
     var fileObj = fs.openTextFile(templatePath, 1)
@@ -75,7 +75,7 @@ function getSetupPyContents(){
     return contents;
 }
 
-// 親パッケージのsetup.pyを書き換える
+// Rewrite setup.py in parent package.
 function saveSetupPy(){
     var dstPath = buildPath(currentFilePath, '..', '..', 'setup.py');
     var contents = getSetupPyContents();
