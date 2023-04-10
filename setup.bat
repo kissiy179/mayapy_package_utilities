@@ -33,16 +33,17 @@ echo | call copy_setup_py.jse
 @REM ------- Register githooks -------------------------
 echo | call link_githooks
 
-@REM ------- Search Maya installation folder from registry -------------------------
-set MAYA_APP_PATH=null
+@REM ------- Find the Maya installation folder -------------------------
+Set MAYA_APP_PATH=null
+Set MAYA_MAX_VER=2030
+Set MAYA_MIN_VER=2015
 
-for /l %%v in (2020, -1, 2015) do (
+@REM Search the registry for all Maya installation folders, and if found, move to the execution process.
+for /l %%v in (%MAYA_MAX_VER%, -1, %MAYA_MIN_VER%) do (
     FOR /F "TOKENS=1,2,*" %%I IN ('REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\Autodesk\Maya\%%v\Setup\InstallPath" /v "MAYA_INSTALL_LOCATION"') DO IF "%%I"=="MAYA_INSTALL_LOCATION" SET MAYA_APP_PATH=%%K
 
     if not !MAYA_APP_PATH!==null goto install_pip
 )
-
-@REM If Maya is not found, move to exception handling.
 goto except
 
 @REM ------- Installing pip -------------------------
@@ -61,7 +62,7 @@ if not %errorlevel%==0 (
 )
 
 @REM ------- Install packages -------------------------
-call %MAYAPY_PATH% -m pip install %UPGRADE% -r ..\requirements.txt -t %LIB_PATH% --use-feature=2020-resolver
+call %MAYAPY_PATH% -m pip install %UPGRADE% -r ..\requirements.txt -t %LIB_PATH%
 
 echo ==============================================================================
 echo  Complete setup of %PACKAGE_NAME%.
