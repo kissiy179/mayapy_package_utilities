@@ -33,9 +33,9 @@ echo | call copy_setup_py.jse
 @REM ------- Register githooks -------------------------
 echo | call link_githooks
 
-@REM ------- Find the Maya installation folder -------------------------
+@REM ------- Find the Maya installation folder(Only Python2) -------------------------
 Set MAYA_APP_PATH=null
-Set MAYA_MAX_VER=2030
+Set MAYA_MAX_VER=2020
 Set MAYA_MIN_VER=2015
 
 @REM Search the registry for all Maya installation folders, and if found, move to the execution process.
